@@ -17,6 +17,9 @@ public class LoopAttack extends Robot implements Runnable {
 	private Screen screen = new Screen();
 	private Match match;
 	private String type;
+	
+	
+	int cnt = 0;
 
 	public void start() {
 		if (thread == null) {
@@ -40,7 +43,8 @@ public class LoopAttack extends Robot implements Runnable {
 		try {
 			System.out.println(threadName + ": Wait start_stage.png");
 			screen.wait("start_stage.png", FOREVER);
-			System.out.println(threadName + ": Click start_stage.png");
+			cnt++;
+			System.out.println(threadName + ": Click start_stage.png Round = "+cnt);
 			screen.click("start_stage.png");
 
 			while (!searchImage()) {
@@ -48,13 +52,13 @@ public class LoopAttack extends Robot implements Runnable {
 
 			switch (type) {
 			case "WIN":
-				System.out.println(threadName + ": Wait victory.png");
-				screen.wait("victory.png", FOREVER);
+				System.out.println(threadName + ": Wait reward.png");
+				screen.wait("reward.png", FOREVER);
 
 				screen.wait(4.0);
 
-				System.out.println(threadName + ": Click victory.png");
-				screen.click("victory.png");
+				System.out.println(threadName + ": Click reward.png");
+				screen.click("reward.png");
 				screen.delayClick(1000);
 				screen.click();
 
@@ -99,7 +103,7 @@ public class LoopAttack extends Robot implements Runnable {
 
 	private boolean searchImage() {
 		try {
-			screen.wait("victory.png");
+			screen.wait("reward.png");
 			type = "WIN";
 			return true;
 		} catch (FindFailed e) {
